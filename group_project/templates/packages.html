@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Travel Packages - Travel Buddy{% endblock %}
+{% block content %}
+<h1 class="section-title">Our Travel Packages</h1>
+<p class="section-subtitle">Choose your next adventure from our curated packages</p>
+
+<div class="packages-grid">
+  {% for package in packages %}
+  <div class="package-card">
+    <img src="{{ package.image_url or url_for('static', filename='images/placeholders/travel' + (loop.index|string) + '.jpg') }}" alt="{{ package.title }}">
+    <div class="package-details">
+      <h2>{{ package.title }}</h2>
+      <div class="package-meta">
+        <span class="package-duration"><i class="fas fa-clock"></i> {{ package.duration }} days</span>
+        <span class="package-price"><i class="fas fa-tag"></i> ${{ package.price }}</span>
+      </div>
+      <a href="{{ url_for('package_detail', id=package.id) }}" class="btn btn-accent">View Details</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 3rem;">
+    <h1 style="font-size: 3rem; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Admin Dashboard
+    </h1>
+    <p style="font-size: 1.2rem; opacity: 0.8;">Manage your travel agency</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+    <div class="card" style="text-align: center;">
+        <i class="fas fa-users" style="font-size: 3rem; color: #4ecdc4; margin-bottom: 1rem;"></i>
+        <h3 style="margin-bottom: 0.5rem;">Total Users</h3>
+        <p style="font-size: 2rem; font-weight: bold; color: #ff6b6b;">{{ users|length - 1}}</p>
+    </div>
+    
+    <div class="card" style="text-align: center;">
+        <i class="fas fa-calendar-check" style="font-size: 3rem; color: #4ecdc4; margin-bottom: 1rem;"></i>
+        <h3 style="margin-bottom: 0.5rem;">Total Bookings</h3>
+        <p style="font-size: 2rem; font-weight: bold; color: #ff6b6b;">{{ bookings|length }}</p>
+    </div>
+    
+    <div class="card" style="text-align: center;">
+        <i class="fas fa-suitcase" style="font-size: 3rem; color: #4ecdc4; margin-bottom: 1rem;"></i>
+        <h3 style="margin-bottom: 0.5rem;">Total Packages</h3>
+        <p style="font-size: 2rem; font-weight: bold; color: #ff6b6b;">{{ packages|length }}</p>
+    </div>
+</div>
+
+<div style="text-align: center; margin-bottom: 3rem;">
+    <a href="{{ url_for('add_package') }}" class="btn" style="font-size: 1.2rem; padding: 15px 30px;">
+        <span><i class="fas fa-plus"></i> Add New Package</span>
+    </a>
+</div>
+
+<div style="display: grid; gap: 3rem;">
+    <!-- Recent Bookings -->
+    <div class="card">
+        <h3 style="margin-bottom: 2rem; color: #4ecdc4; font-size: 1.8rem;">
+            <i class="fas fa-calendar-alt"></i> Recent Bookings
+        </h3>
+        {% if bookings %}
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.2);">
+                            <th style="padding: 1rem; text-align: left; color: #4ecdc4;">User</th>
+                            <th style="padding: 1rem; text-align: left; color: #4ecdc4;">Package</th>
+                            <th style="padding: 1rem; text-align: left; color: #4ecdc4;">Date</th>
+                            <th style="padding: 1rem; text-align: left; color: #4ecdc4;">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings[-10:] %}
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <td style="padding: 1rem;">{{ booking.user.username }}</td>
+                            <td style="padding: 1rem;">{{ booking.package.title }}</td>
+                            <td style="padding: 1rem;">{{ booking.booking_date.strftime('%Y-%m-%d') }}</td>
+                            <td style="padding: 1rem; color: #ff6b6b; font-weight: bold;">${{ booking.package.price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p style="text-align: center; opacity: 0.8;">No bookings yet</p>
+        {% endif %}
+    </div>
+
+    <!-- All Users -->
+    <div class="card">
+        <h3 style="margin-bottom: 2rem; color: #4ecdc4; font-size: 1.8rem;">
+            <i class="fas fa-users"></i> All Users
+        </h3>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.2);">
+                        <th style="padding: 1rem; text-align: left; color: #4ecdc4;">Username</th>
+                        <th style="padding: 1rem; text-align: left; color: #4ecdc4;">Email</th>
+                        <!-- <th style="padding: 1rem; text-align: left; color: #4ecdc4;">Admin</th> -->
+                        <th style="padding: 1rem; text-align: left; color: #4ecdc4;">Bookings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    {% if not user.is_admin %}
+                    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                        <td style="padding: 1rem;">{{ user.username }}</td>
+                        <td style="padding: 1rem;">{{ user.email }}</td>
+                        <!-- <td style="padding: 1rem;">{{ 'Yes' if user.is_admin else 'No' }}</td> -->
+                        <td style="padding: 1rem;">
+                            {{ user.bookings|length }}
+                        </td>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

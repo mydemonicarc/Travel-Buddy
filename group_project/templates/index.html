@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- HERO VIDEO SECTION -->
+<section class="hero-split-section">
+  <div class="hero-left">
+    <video class="hero-split-video" autoplay muted loop playsinline>
+      <source src="{{ url_for('static', filename='videos/project_intro.mp4') }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div class="hero-right">
+    <div class="hero-text-content">
+      <h1>Explore the World with Travel Buddy</h1>
+      <p>Your true travel partner for unforgettable experiences.</p>
+      <a href="{{ url_for('packages') }}" class="btn btn-accent">Start Your Journey</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- FEATURES SECTION -->
+<section class="features-section">
+  <h2>Why Choose Travel Buddy?</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <i class="fas fa-map-marked-alt"></i>
+      <h3>Personalized Itineraries</h3>
+      <p>Trips tailored to your interests, schedule, and budget.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-users"></i>
+      <h3>Expert Travel Guides</h3>
+      <p>Local insights and professional support for every journey.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-globe"></i>
+      <h3>Global Destinations</h3>
+      <p>From hidden gems to iconic landmarks, we've got you covered.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-handshake"></i>
+      <h3>Trusted Partners</h3>
+      <p>Reliable bookings and quality service every step of the way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED DESTINATIONS / PACKAGES PREVIEW -->
+<section class="featured-packages">
+  <h2>Featured Destinations</h2>
+  <div class="packages-grid">
+    {% for package in packages[:4] %}
+    <div class="package-card">
+      <img src="{{ package.image_url or url_for('static', filename='images/placeholders/travel' + (loop.index|string) + '.jpg') }}" alt="{{ package.title }}">
+      <div class="package-details">
+        <h3>{{ package.title }}</h3>
+        <a href="{{ url_for('package_detail', id=package.id) }}" class="btn btn-secondary">View Details</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <a href="{{ url_for('packages') }}" class="btn btn-accent all-packages-btn">Explore All Packages</a>
+</section>
+
+<!-- CALL TO ACTION SECTION -->
+<section class="discover-section">
+  <div class="discover-content">
+    <h2>Ready to Discover Your Next Adventure?</h2>
+    <p>Let Travel Buddy turn your dream trip into reality. Book now and start exploring!</p>
+    <a href="{{ url_for('packages') }}" class="btn btn-accent">Plan Your Trip</a>
+  </div>
+</section>
+
+{% endblock %}
