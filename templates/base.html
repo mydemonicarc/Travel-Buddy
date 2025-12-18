@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Travel Buddy - Your Ultimate Travel Partner{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{url_for('home')}}" class="brand-link">
+                        <img src="{{ url_for('static', filename='images/TB_logo.jpg') }}" alt="Travel Buddy Logo" class="brand-logo">Travel Buddy
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="{{url_for('home')}}"><i class="fas fa-home"></i> Home</a>
+                <a href="{{url_for('packages')}}"><i class="fas fa-suitcase"></i> Packages</a>
+                <a href="{{url_for('about')}}"><i class="fas fa-info-circle"></i> About</a>
+                <a href="{{url_for('contact')}}"><i class="fas fa-envelope"></i> Contact</a>
+                {% if current_user.is_authenticated %}
+                    {% if not current_user.is_admin %}
+                        <a href="{{url_for('mybookings')}}"><i class="fas fa-calendar-check"></i> My Bookings</a>
+                    {% else %}
+                        <a href="{{url_for('admin')}}"><i class="fas fa-dashboard"></i> Dashboard</a>
+                    {% endif %}
+                    <a href="{{url_for('logout')}}" class="btn btn-accent"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                {% else %}
+                    <a href="{{url_for('login')}}" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Main Content -->
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-plane"></i> Travel Buddy</h3>
+                <p>Your trusted partner in discovering the world's most beautiful destinations.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{{url_for('packages')}}">Travel Packages</a></li>
+                    <li><a href="{{url_for('about')}}">About Us</a></li>
+                    <li><a href="{{url_for('contact')}}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@travelbuddy.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Travel Street, Adventure City</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; {{ current_year }} Travel Buddy. All rights reserved. | Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> for travelers</p>
+        </div>
+    </footer>
+
+    <!-- Particle Effect Background -->
+    <div class="particles-container">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Smooth Scrolling Script -->
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add loading animation to forms
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function() {
+                const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    submitBtn.disabled = true;
+                }
+            });
+        });
+
+        // Add fade-in animation to elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .package-card, .stat-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

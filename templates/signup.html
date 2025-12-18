@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Sign Up - Travel Buddy{% endblock %}
+
+{% block content %}
+<section class="signup-page-wrapper">
+
+  <!-- LEFT SIDE: Brand and Slogan -->
+  <div class="signup-left">
+    <h1 class="brand-name">Travel Buddy</h1>
+    <p class="brand-slogan">Turning travel dreams into lasting memories.</p>
+  </div>
+
+  <!-- RIGHT SIDE: SINGLE SIGNUP CARD -->
+  <div class="signup-right">
+    <div class="signup-card">
+      <form action="{{ url_for('signup') }}" method="POST" class="signup-form">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ form.username(class_="form-input", placeholder="Username") }}
+          {% for error in form.username.errors %}
+            <span class="form-error">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ form.email(class_="form-input", placeholder="Email address") }}
+          {% for error in form.email.errors %}
+            <span class="form-error">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ form.password(class_="form-input", placeholder="Password") }}
+          {% for error in form.password.errors %}
+            <span class="form-error">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ form.confirm_password(class_="form-input", placeholder="Confirm Password") }}
+          {% for error in form.confirm_password.errors %}
+            <span class="form-error">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-accent btn-signup">Create Account</button>
+
+        <div class="divider"></div>
+
+        <a href="{{ url_for('login') }}" class="btn btn-accent btn-login">Already have an account? </a>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

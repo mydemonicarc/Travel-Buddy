@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}My Bookings - Travel Buddy{% endblock %}
+
+{% block content %}
+<h1 class="section-title">My Bookings</h1>
+<p class="section-subtitle">Your travel adventures</p>
+
+{% if bookings %}
+  <div class="booking-list">
+    {% for booking in bookings %}
+      <div class="booking-detail-card">
+        <img src="{{ booking.package.image_url }}" alt="{{ booking.package.title }}">
+        <div class="booking-detail-info">
+          <h2>{{ booking.package.title }}</h2>
+          <div class="booking-meta">
+            <span class="price">${{ booking.package.price }}</span>
+            <span class="duration">{{ booking.package.duration }} days</span>
+          </div>
+          <p class="booking-description">{{ booking.package.description }}</p>
+          <div class="booking-status">
+            <span class="status-badge">Booked</span>
+            <span class="date">{{ booking.booking_date.strftime('%B %d, %Y') }}</span>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="no-bookings">
+    <h3>No bookings yet</h3>
+    <p>Start your adventure by booking a travel package!</p>
+    <a href="{{ url_for('packages') }}" class="btn btn-accent">Browse Packages</a>
+  </div>
+{% endif %}
+{% endblock %}

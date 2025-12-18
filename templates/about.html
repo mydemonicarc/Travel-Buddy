@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}About Us - Travel Buddy{% endblock %}}
+{% block content %}
+<section class="about-hero">
+  <h1>About Travel Buddy</h1>
+  <p>Your trusted partner in crafting unforgettable journeys.</p>
+</section>
+
+<section class="about-main">
+  <div class="about-image-container">
+    <img src="{{ url_for('static', filename='images/TB_logo.jpg') }}" alt="Travel Buddy Logo">
+  </div>
+  <div class="about-text">
+    <h2>Welcome to Travel Buddy</h2>
+    <p>
+      At Travel Buddy, we believe travel is more than just visiting places—it’s about creating lifelong memories.
+      Our dedicated team specializes in personalized travel planning, whether you’re dreaming of a beach escape,
+      thrilling adventure, or cultural exploration. Let us handle the details so you can focus on experiencing the world.
+    </p>
+  </div>
+</section>
+
+<section class="about-highlights">
+  <h2>Why Choose Travel Buddy?</h2>
+  <div class="highlight-cards">
+    <div class="highlight-card">
+      <i class="fas fa-map-marked-alt"></i>
+      <h3>Personalized Itineraries</h3>
+      <p>Custom travel plans tailored to your interests and budget.</p>
+    </div>
+    <div class="highlight-card">
+      <i class="fas fa-users"></i>
+      <h3>Expert Team</h3>
+      <p>Experienced professionals with insider knowledge of top destinations.</p>
+    </div>
+    <div class="highlight-card">
+      <i class="fas fa-globe"></i>
+      <h3>Unforgettable Experiences</h3>
+      <p>From relaxing escapes to thrilling adventures—we make it happen.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

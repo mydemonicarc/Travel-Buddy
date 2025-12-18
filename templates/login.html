@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Login - Travel Buddy{% endblock %}
+{% block content %}
+<section class="login-page-wrapper">
+
+  <!-- LEFT SIDE: Brand and Slogan -->
+  <div class="login-left">
+    <h1 class="brand-name">Travel Buddy</h1>
+    <p class="brand-slogan">Turning travel dreams into lasting memories.</p>
+  </div>
+
+  <!-- RIGHT SIDE: SINGLE Login Card -->
+  <div class="login-right">
+    <div class="login-card">
+      <form action="{{ url_for('login') }}" method="POST" class="login-form">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ form.email(class_="form-input", placeholder="Email address") }}
+          {% for error in form.email.errors %}
+            <span class="form-error">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ form.password(class_="form-input", placeholder="Password") }}
+          {% for error in form.password.errors %}
+            <span class="form-error">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="form-submit">
+          {{ form.submit(class_="btn btn-accent btn-login") }}
+        </div>
+
+        <div class="divider"></div>
+
+        <a href="{{ url_for('signup') }}" class="btn btn-accent btn-create">Create New Account</a>
+      </form>
+    </div>
+  </div>
+
+</section>
+{% endblock %}

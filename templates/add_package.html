@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="add-package-page">
+  <div class="add-package-card">
+    <h2>Add New Package</h2>
+    <p class="add-package-subtitle">Fill out the details below to create a new travel package.</p>
+    
+    <form action="{{ url_for('add_package') }}" method="POST" class="add-package-form">
+      <div class="form-group">
+        <label for="name">Package Name</label>
+        <input type="text" id="name" name="title" required class="form-input" placeholder="Enter package name">
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" required class="form-input" placeholder="Describe the package"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" step="0.01" required class="form-input" placeholder="e.g. 1299.99">
+      </div>
+
+      <div class="form-group">
+        <label for="duration">Duration (in days)</label>
+        <input type="number" id="duration" name="duration" required class="form-input" placeholder="e.g. 7">
+      </div>
+
+      <div class="form-group">
+        <label for="img_url">Image URL</label>
+        <input type="url" id="img_url" name="image_url" required class="form-input" placeholder="https://example.com/image.jpg">
+      </div>
+
+      <button type="submit" class="btn btn-accent">Add Package</button>
+    </form>
+
+    <div class="back-link">
+      <a href="{{ url_for('admin') }}" class="btn btn-secondary">Back to Admin Dashboard</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
